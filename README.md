@@ -7,3 +7,9 @@ Install this software on your computer with the following command:
 ```bash
 pip install git+https://github.com/shportnoy/ModifyDicomT2
 ```
+Running the script
+--------------------
+Following installation, the script can be launched with the command:
+```bash
+modify_dicom_t2
+````
