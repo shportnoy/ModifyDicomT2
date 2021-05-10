@@ -3,7 +3,10 @@ Modify header information for Myomaps baseline (T2prep=0 ms, Tsat=0 ms) acquisit
 
 Installation
 ------------
-Install this software on your computer with the following command:
+In order to use this software you need to have python installed on your computer. If you don't already have it, the easiest way to get python is to download Anaconda:
+https://www.anaconda.com/products/individual
+
+Install ModifyDicomT2 on your computer with the following command:
 ```bash
 pip install git+https://github.com/shportnoy/ModifyDicomT2
 ```
