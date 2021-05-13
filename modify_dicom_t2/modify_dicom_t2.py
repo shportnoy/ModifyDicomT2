@@ -48,6 +48,9 @@ def fix_baseline(in_folder, out_folder):
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
                 
+                if len(prep_time_list) == len(dicom_list) - 1:
+                    prep_time_list.insert(0,'2000')
+                
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
