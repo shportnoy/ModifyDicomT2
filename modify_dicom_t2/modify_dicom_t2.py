@@ -50,7 +50,7 @@ def fix_baseline(in_folder, out_folder):
                 
                 if len(prep_time_list) == len(dicom_list) - 1: #On VE11B Tprep=0 doesn't show up in prep time list.
                                                                #Assuming here that Tprep=0 is always the first scan.
-                    prep_time_list.insert(0,'2000')
+                    prep_time_list.append('2000')
                 
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
             
