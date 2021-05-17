@@ -59,6 +59,8 @@ def fix_baseline(in_folder, out_folder):
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
 
+
+
 def main():
     in_folder = easygui.diropenbox()
     out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_fixed'))
@@ -69,7 +71,7 @@ def main():
 
     fix_baseline(in_folder, out_folder)
 
-    easygui.msgbox('Created folder' + out_folder, 'Title Goes Here')
+    easygui.msgbox('Created folder ' + out_folder, 'Title Goes Here')
 
     more_folders = easygui.ynbox('Any more data to modify?', 'Title', ('Yes', 'No'))
 
