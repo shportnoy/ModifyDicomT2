@@ -77,6 +77,7 @@ def main():
         fix_baseline(in_folder, out_folder)
     except Exception as e:
         easygui.msgbox(str(e))
+        os.rmdir(out_folder)
         return
 
     easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
