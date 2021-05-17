@@ -70,9 +70,11 @@ def main():
         shutil.rmtree(out_folder)
     os.mkdir(out_folder)
 
-    aa = fix_baseline(in_folder, out_folder)
+    fix_baseline(in_folder, out_folder)
 
-    easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
+    user_click = easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
+
+    return user_click
 
 
 if __name__ == '__main__':
