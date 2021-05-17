@@ -58,6 +58,8 @@ def fix_baseline(in_folder, out_folder):
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
+    return 
+
 
 
 
@@ -72,19 +74,6 @@ def main():
     fix_baseline(in_folder, out_folder)
 
     easygui.msgbox('Created folder ' + out_folder, 'Title Goes Here')
-
-    more_folders = easygui.ynbox('Any more data to modify?', 'Title', ('Yes', 'No'))
-
-    if more_folders:
-        in_folder = easygui.diropenbox()
-        out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_fixed'))
-
-        if os.path.exists(out_folder):
-            shutil.rmtree(out_folder)
-        os.mkdir(out_folder)
-
-        fix_baseline(in_folder, out_folder)
-
 
 
 if __name__ == '__main__':
