@@ -9,6 +9,7 @@ import shutil
 import easygui
 import re
 
+#function to get T2 prep times from dicom header
 def get_prep_times_VE11(dicom_hdr):
     
     #define regular expressions
@@ -43,14 +44,15 @@ def fix_baseline(in_folder, out_folder):
             ds.ImageComments = comment_str.replace('0','2000')
         
         else:  # VE11B - need to add ImageComments field with prep time
-        
+
+            print('VE11B\n')
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
                 
                 if len(prep_time_list) == len(dicom_list) - 1: #On VE11B Tprep=0 doesn't show up in prep time list.
                                                                #Assuming here that Tprep=0 is always the first scan.
-                    prep_time_list.append('2000')
+                    prep_time_list.insert(0,'2000')
                 
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
             
