@@ -9,7 +9,7 @@ import shutil
 import easygui
 import re
 
-#function to get T2 prep times from dicom header
+#function to read T2 prep times from dicom header
 def get_prep_times_VE11(dicom_hdr):
     
     #define regular expressions
@@ -45,7 +45,6 @@ def fix_baseline(in_folder, out_folder):
         
         else:  # VE11B - need to add ImageComments field with prep time
 
-            print('VE11B\n')
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
@@ -71,9 +70,9 @@ def main():
         shutil.rmtree(out_folder)
     os.mkdir(out_folder)
 
-    fix_baseline(in_folder, out_folder)
+    aa = fix_baseline(in_folder, out_folder)
 
-    output = easygui.msgbox('Created folder ' + out_folder, 'Title Goes Here')
+    easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
 
 
 if __name__ == '__main__':
