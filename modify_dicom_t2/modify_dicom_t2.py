@@ -51,14 +51,14 @@ def fix_baseline(in_folder, out_folder):
                 prep_time_list = get_prep_times_VE11(ds)
                 
                 if len(prep_time_list) == len(dicom_list) - 1: #On VE11B Tprep=0 doesn't show up in prep time list.
-                                                               #Assuming here that Tprep=0 is always the first scan.
+                                                               #Assuming here that Tprep=0 is the first scan.
                     prep_time_list.insert(0,'2000')
                 
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
-    return 
+    return True
 
 
 
@@ -73,7 +73,7 @@ def main():
 
     fix_baseline(in_folder, out_folder)
 
-    easygui.msgbox('Created folder ' + out_folder, 'Title Goes Here')
+    output = easygui.msgbox('Created folder ' + out_folder, 'Title Goes Here')
 
 
 if __name__ == '__main__':
