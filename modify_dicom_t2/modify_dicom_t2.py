@@ -27,6 +27,7 @@ def get_prep_times_VE11(dicom_hdr):
         num_preps = int(prep_time_search[0])
         prep_times = re.findall(prep_times_value_re, out)[0:num_preps]
         return prep_times
+
    
 
 
@@ -43,23 +44,25 @@ def fix_baseline(in_folder, out_folder):
             comment_str = ds.ImageComments
             ds.ImageComments = comment_str.replace('0','2000')
         
-        else:  # VE11B - need to add ImageComments field with prep time
+        else:  # VE11B - need to add ImageComments field with prep times
 
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
                 
                 if len(prep_time_list) == len(dicom_list) - 1: #On VE11B Tprep=0 doesn't show up in prep time list.
-                                                               #Assuming here that Tprep=0 is the first scan.
+                                                           #Assuming here that Tprep=0 is the first scan.
                     prep_time_list.insert(0,'2000')
+
+                elif len(prep_time_list) < len(dicom_list) -1 or len(prep_time_list) > len(dicom_list):
+
+                    raise ValueError('Number of preps in acquisition does not match number of images. Maybe this is not a T2-prepared scan...')
                 
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
     return True
-
-
 
 
 def main():
@@ -70,7 +73,11 @@ def main():
         shutil.rmtree(out_folder)
     os.mkdir(out_folder)
 
-    fix_baseline(in_folder, out_folder)
+    try:
+        fix_baseline(in_folder, out_folder)
+    except Exception as e:
+        easygui.msgbox(str(e))
+        return
 
     easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
 
