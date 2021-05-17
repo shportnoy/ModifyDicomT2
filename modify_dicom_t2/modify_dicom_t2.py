@@ -72,7 +72,7 @@ def main():
 
     fix_baseline(in_folder, out_folder)
 
-    easygui.textbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
+    easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
 
 
 if __name__ == '__main__':

@@ -18,5 +18,7 @@ setup(name='modify_dicom_t2',
       entry_points='''
         [gui_scripts]
         modify_dicom_t2=modify_dicom_t2.modify_dicom_t2:main
+        [console_scripts]
+        modify_dicom_cli=modify_dicom_t2.modify_dicom_t2:main
       ''',
       zip_safe=False)
