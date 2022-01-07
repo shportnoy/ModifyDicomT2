@@ -57,8 +57,9 @@ def fix_baseline(in_folder, out_folder):
                 elif len(prep_time_list) < len(dicom_list) -1 or len(prep_time_list) > len(dicom_list):
 
                     raise ValueError('Number of preps in acquisition does not match number of images. Maybe this is not a T2-prepared scan...')
-                
-            ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[index].split('.')[0] + ' ms'
+            
+            InstanceNumber = int(ds.InstanceNumber)   
+            ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[InstanceNumber - 1].split('.')[0] + ' ms'
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
