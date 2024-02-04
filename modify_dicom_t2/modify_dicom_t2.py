@@ -41,7 +41,9 @@ def fix_baseline(in_folder, out_folder):
         
         if hasattr(ds, 'ImageComments'): #ImageComments field is only pre-written in VE11C
             comment_str = ds.ImageComments
-            ds.ImageComments = comment_str.replace(' 0', ' 2000')
+            comment_str_new = comment_str.replace(' 0', ' 2000')
+            print(comment_str_new)
+            ds.ImageComments = comment_str_new
         
         else:  # VE11 - need to add ImageComments field with prep times
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
@@ -68,11 +70,11 @@ def fix_baseline(in_folder, out_folder):
 
 def main():
     in_folder = easygui.diropenbox()
-    out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_fixed'))
+    out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_corrected'))
 
     if os.path.exists(out_folder):
         shutil.rmtree(out_folder)
-    os.mk
+    os.mkdir(out_folder)
     try:
         fix_baseline(in_folder, out_folder)
     except Exception as e:
