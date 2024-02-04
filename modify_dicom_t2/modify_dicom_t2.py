@@ -60,11 +60,11 @@ def fix_baseline(in_folder, out_folder):
             
             InstanceNumber = int(ds.InstanceNumber)   
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[InstanceNumber - 1].split('.')[0] + ' ms'
+            ds.EchoTime = prep_time_list[InstanceNumber - 1].split('.')[0]
             
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
     return True
-
 
 def main():
     in_folder = easygui.diropenbox()
