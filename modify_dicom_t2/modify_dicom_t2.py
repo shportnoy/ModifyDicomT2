@@ -40,15 +40,15 @@ def fix_baseline(in_folder, out_folder):
         ds = pydicom.dcmread(os.path.join(in_folder, dicom_filename))
         
         if hasattr(ds, 'ImageComments'): #ImageComments field is only pre-written in VE11C
-            
             comment_str = ds.ImageComments
-            ds.ImageComments = comment_str.replace('0','2000')
+            ds.ImageComments = comment_str.replace(' 0', ' 2000')
         
-        else:  # VE11B - need to add ImageComments field with prep times
-
+        else:  # VE11 - need to add ImageComments field with prep times
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
+                print(prep_time_list)
+
                 
                 if len(prep_time_list) == len(dicom_list) - 1: #On VE11B Tprep=0 doesn't show up in prep time list.
                                                            #Assuming here that Tprep=0 is the first scan.
@@ -57,11 +57,11 @@ def fix_baseline(in_folder, out_folder):
                 elif len(prep_time_list) < len(dicom_list) -1 or len(prep_time_list) > len(dicom_list):
 
                     raise ValueError('Number of preps in acquisition does not match number of images. Maybe this is not a T2-prepared scan...')
-            
+
             InstanceNumber = int(ds.InstanceNumber)   
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[InstanceNumber - 1].split('.')[0] + ' ms'
             ds.EchoTime = prep_time_list[InstanceNumber - 1].split('.')[0]
-            
+
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
     return True
@@ -72,8 +72,7 @@ def main():
 
     if os.path.exists(out_folder):
         shutil.rmtree(out_folder)
-    os.mkdir(out_folder)
-
+    os.mk
     try:
         fix_baseline(in_folder, out_folder)
     except Exception as e:
