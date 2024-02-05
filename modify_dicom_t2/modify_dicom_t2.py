@@ -42,10 +42,9 @@ def fix_baseline(in_folder, out_folder):
         if hasattr(ds, 'ImageComments'): #ImageComments field is only pre-written in VE11C
             comment_str = ds.ImageComments
             comment_str_new = comment_str.replace(' 0', ' 2000')
-            print(comment_str_new)
             ds.ImageComments = comment_str_new
         
-        else:  # VE11 - need to add ImageComments field with prep times
+        else:  # VE11B - need to add ImageComments field with prep times
             if index==0: #get list of all prep times - each dicom file has the list of all prep times 
                          #in the sequence, so only need to do this once
                 prep_time_list = get_prep_times_VE11(ds)
@@ -62,7 +61,7 @@ def fix_baseline(in_folder, out_folder):
 
             InstanceNumber = int(ds.InstanceNumber)   
             ds.ImageComments = 'T2 prep. duration = ' + prep_time_list[InstanceNumber - 1].split('.')[0] + ' ms'
-            ds.EchoTime = prep_time_list[InstanceNumber - 1].split('.')[0]
+
 
         ds.save_as(os.path.join(out_folder, dicom_filename))
 
