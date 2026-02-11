@@ -40,8 +40,8 @@ def fix_baseline(in_folder, out_folder):
         ds = pydicom.dcmread(os.path.join(in_folder, dicom_filename))
         
         if hasattr(ds, 'ImageComments'): #ImageComments field is only pre-written in VE11C
-            comment_str = ds.ImageComments
-            comment_str_new = comment_str.replace(' 0', ' 2000')
+            # comment_str = ds.ImageComments
+            # comment_str_new = comment_str.replace(' 0', ' 2000')
 
             if not comment_str_new.startswith('T2'):
                 tmp = comment_str_new.split(', ')
