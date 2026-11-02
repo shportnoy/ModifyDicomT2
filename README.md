@@ -18,8 +18,8 @@ modify_dicom_t2
 ````
 How it works
 ------------
-1) The script launches with a dialog box asking you to select a folder. Select the folder with the dicom images obtained from the T2-prepared Myomaps scan. 
+1) The script launches with a dialog box asking you to select a folder. Select the folder(s) with the dicom images obtained from the T2-prepared Myomaps scan. (Click 'cancel' in the file dialog when you are done selecting folders.)
 2) The script will go through the dicoms in the folder and update the header information (specifically, the Image Comments field) for any baseline scan (with Tprep=0).
-3) All the dicoms will be copied into a new folder with the same name as the folder you selected in Step 1, appended by *_corrected*.
+3) All the dicoms will be copied into a new folder with the same name as the folder(s) you selected in Step 1, appended by *_corrected*.
 4) The script closes.
 5) Import the *_corrected* folder into cvi42 for T2 fitting.

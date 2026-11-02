@@ -28,9 +28,6 @@ def get_prep_times_VE11(dicom_hdr):
         prep_times = re.findall(prep_times_value_re, out)[0:num_preps]
         return prep_times
 
-   
-
-
 def fix_baseline(in_folder, out_folder):
     
     fname_list=os.listdir(in_folder)
@@ -72,21 +69,36 @@ def fix_baseline(in_folder, out_folder):
 
     return True
 
+def select_multiple_folders():
+    selected_folders = []
+    current_dir = os.path.expanduser("~") # start in current directory
+
+    while True:
+        folder = easygui.diropenbox(msg='Select a folder.\n Click "Cancel" when you are done selecting folders.', title='Select multiple folders', default=current_dir)
+        if not folder: # user clicked cancel or closed the window
+            break
+
+        selected_folders.append(folder)
+        current_dir = os.path.dirname(folder) # update current_dir to parent dir of last folder selected
+
+    return selected_folders
+
 def main():
-    in_folder = easygui.diropenbox()
-    out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_corrected'))
+    in_folders = select_multiple_folders()
+    for in_folder in in_folders:
+        out_folder = os.path.join(os.path.dirname(in_folder), (os.path.basename(in_folder) + '_corrected'))
 
-    if os.path.exists(out_folder):
-        shutil.rmtree(out_folder)
-    os.mkdir(out_folder)
-    try:
-        fix_baseline(in_folder, out_folder)
-    except Exception as e:
-        easygui.msgbox(str(e))
-        os.rmdir(out_folder)
-        return
+        if os.path.exists(out_folder):
+            shutil.rmtree(out_folder)
+        os.mkdir(out_folder)
+        try:
+            fix_baseline(in_folder, out_folder)
+        except Exception as e:
+            easygui.msgbox(str(e))
+            os.rmdir(out_folder)
+            return
 
-    easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
+        easygui.msgbox('Created folder \'' + out_folder +'\'', 'ModifyDicomT2')
 
 
 if __name__ == '__main__':
